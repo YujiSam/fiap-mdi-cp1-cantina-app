@@ -1,50 +1,56 @@
-# Welcome to your Expo app 👋
+# 🍔 Cantina FIAP - App de Pedidos
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 📱 Sobre o Projeto
 
-## Get started
+### Nome do App
+**Cantina FIAP** - App para reserva e pré-pedido de itens da cantina
 
-1. Install dependencies
+### Problema que resolve
+O app resolve o problema de **filas e incerteza no horário do intervalo** na cantina da FIAP. Com o app, os alunos podem:
+- Ver o cardápio antecipadamente
+- Fazer o pedido com antecedência
+- Saber o valor total antes de chegar na cantina
+- Retirar o pedido sem enfrentar filas
 
-   ```bash
-   npm install
-   ```
+### Operação da FIAP escolhida
+Foi escolhida a operação da **Cantina da FIAP**, pois:
+- É um problema real enfrentado pelos alunos diariamente
+- O horário do intervalo é curto (geralmente 15-20 minutos)
+- Muitos alunos desistem de comprar por causa das filas
+- A cantina fica sobrecarregada nos horários de pico
 
-2. Start the app
+### Funcionalidades implementadas
+✅ Visualização completa do cardápio  
+✅ Adição de itens ao carrinho  
+✅ Remoção de itens do carrinho  
+✅ Cálculo automático do valor total  
+✅ Resumo do pedido antes de finalizar  
+✅ Confirmação com número do pedido  
+✅ Carrinho persistente entre telas  
+✅ Tratamento de carrinho vazio  
 
-   ```bash
-   npx expo start
-   ```
+## 🚀 Como Rodar o Projeto
 
-In the output, you'll find options to open the app in a
+### Pré-requisitos
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Node.js 
+Expo Go
+Git
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Passo a passo para executar
 
 ```bash
-npm run reset-project
-```
+# 1. Clone o repositório
+git clone https://github.com/YujiSam/fiap-mdi-cp1-cantina-app.git
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+# 2. Entre na pasta do projeto
+cd fiap-mdi-cp1-cantina-app
 
-## Learn more
+# 3. Instale as dependências
+npm install
 
-To learn more about developing your project with Expo, look at the following resources:
+# 4. Execute o projeto
+npx expo start
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# 5. Escaneie o QR Code com o app Expo Go
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

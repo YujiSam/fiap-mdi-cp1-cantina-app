@@ -34,7 +34,9 @@ Foi escolhida a operação da **Cantina da FIAP**, pois:
 ### Pré-requisitos
 
 Node.js 
+
 Expo Go
+
 Git
 
 ### Passo a passo para executar
@@ -53,4 +55,75 @@ npm install
 npx expo start
 
 # 5. Escaneie o QR Code com o app Expo Go
+```
+
+## 💻 Decisões Técnicas
+
+```
+Estrutura do Projeto
+text
+app/           # Telas (Home, Cardápio, Carrinho)
+components/    # Componentes reutilizáveis (Botao, ItemCardapio, etc.)
+constants/     # Dados do cardápio
+Hooks utilizados
+useState	Guardar itens adicionados ao carrinho
+useState	Controlar loading na finalização
+useLocalSearchParams Receber dados do carrinho da tela anterior
+```
+
+### Navegação
+
+Expo Router com Stack Navigator (pilha)
+
+router.push() → ir para nova tela
+
+router.back() → voltar
+
+router.replace() → voltar ao início
+
+### Estilização
+
+StyleSheet do React Native
+
+Cores da FIAP: vermelho #D1000F
+
+Flexbox para responsividade
+
+### Diferenciais implementados
+
+✅ Loading nos botões
+
+✅ Tela de "Carrinho vazio"
+
+✅ Feedback visual (Alert ao finalizar)
+
+## 📸 Demonstração
+
+### Prints das telas
+
+#### Tela 1: Tela Inicial (Home)
+![Tela Inicial](./screenshots/home.png)
+
+#### Tela 2: Cardápio
+![Tela Cardápio](./screenshots/cardapio.png)
+
+#### Tela 3: Carrinho
+![Tela Carrinho](./screenshots/carrinho.png)
+
+#### Tela 4: Confirmação
+![Tela Confirmado](./screenshots/confirmado.png)
+
+## 🎥 Vídeo de demonstração
+
+[▶️ Clique aqui para ver o vídeo do app funcionando](https://youtube.com/shorts/baAa9Yk8ep4)
+
+## Próximos Passos 
+
+Login com RM
+
+Notificações push
+
+## Integrante
+
+### Gustavo Yuji Osugi [RM555034]
 

@@ -1,36 +1,35 @@
 import { View, Text, StyleSheet, FlatList, Alert, TouchableOpacity } from 'react-native';
-import { useLocalSearchParams, router } from 'expo-router';
-import { useState } from 'react';
+import { router } from 'expo-router';
+import { useContext, useState } from 'react';
 import Botao from '../components/Botao';
+import { AppDataContext } from '../context/AppDataContext';
 
 export default function CarrinhoScreen() {
-    const params = useLocalSearchParams();
-    const [itens, setItens] = useState(
-        params.itens ? JSON.parse(params.itens) : []
-    );
+    const { items, setItems } = useContext(AppDataContext);
     const [finalizando, setFinalizando] = useState(false);
 
+    const itens = items;
     const totalPreco = itens.reduce((sum, item) => sum + item.preco, 0);
     const totalItens = itens.length;
 
     const removerItem = (index) => {
         const novosItens = [...itens];
         novosItens.splice(index, 1);
-        setItens(novosItens);
+        setItems(novosItens);
     };
 
     const limparCarrinho = () => {
         Alert.alert(
-        'Limpar carrinho',
-        'Tem certeza que deseja remover todos os itens?',
-        [
-            { text: 'Cancelar', style: 'cancel' },
-            { 
-            text: 'Limpar', 
-            style: 'destructive',
-            onPress: () => setItens([])
-            },
-        ]
+            'Limpar carrinho',
+            'Tem certeza que deseja remover todos os itens?',
+            [
+                { text: 'Cancelar', style: 'cancel' },
+                { 
+                    text: 'Limpar', 
+                    style: 'destructive',
+                    onPress: () => setItems([])
+                },
+            ]
         );
     };
 
@@ -38,84 +37,87 @@ export default function CarrinhoScreen() {
         setFinalizando(true);
         
         setTimeout(() => {
-        const numeroPedido = Math.floor(Math.random() * 10000);
-        Alert.alert(
-            '✅ Pedido Confirmado!',
-            `Pedido #${numeroPedido}\n\nTotal: R$ ${totalPreco.toFixed(2)}\n\nRetire seu pedido na cantina em 15 minutos.\n\nApresente este número no balcão.`,
-            [
-            { 
-                text: 'OK', 
-                onPress: () => {
-                setFinalizando(false);
-                router.replace('/');
-                }
-            }
-            ]
-        );
+            const numeroPedido = Math.floor(Math.random() * 10000);
+
+            Alert.alert(
+                '✅ Pedido Confirmado!',
+                `Pedido #${numeroPedido}\n\nTotal: R$ ${totalPreco.toFixed(2)}\n\nRetire seu pedido na cantina em 15 minutos.\n\nApresente este número no balcão.`,
+                [
+                    { 
+                        text: 'OK', 
+                        onPress: () => {
+                            setFinalizando(false);
+                            setItems([]); // 🔥 limpa carrinho
+                            router.replace('/');
+                        }
+                    }
+                ]
+            );
         }, 1000);
     };
 
     if (itens.length === 0) {
         return (
-        <View style={styles.emptyContainer}>
-            <Text style={styles.emptyEmoji}>🛒</Text>
-            <Text style={styles.emptyTitle}>Carrinho vazio</Text>
-            <Text style={styles.emptyText}>
-            Você ainda não adicionou nenhum item ao carrinho.
-            </Text>
-            <Botao 
-            titulo="Voltar ao Cardápio" 
-            onPress={() => router.back()}
-            />
-        </View>
+            <View style={styles.emptyContainer}>
+                <Text style={styles.emptyEmoji}>🛒</Text>
+                <Text style={styles.emptyTitle}>Carrinho vazio</Text>
+                <Text style={styles.emptyText}>
+                    Você ainda não adicionou nenhum item ao carrinho.
+                </Text>
+                <Botao 
+                    titulo="Voltar ao Cardápio" 
+                    onPress={() => router.back()}
+                />
+            </View>
         );
     }
 
     return (
         <View style={styles.container}>
-        <View style={styles.header}>
-            <Text style={styles.totalItens}>{totalItens} itens</Text>
-            <TouchableOpacity onPress={limparCarrinho}>
-            <Text style={styles.limparTexto}>Limpar tudo</Text>
-            </TouchableOpacity>
-        </View>
-
-        <FlatList
-            data={itens}
-            renderItem={({ item, index }) => (
-            <View style={styles.itemCard}>
-                <View style={styles.itemInfo}>
-                <Text style={styles.itemNome}>{item.nome}</Text>
-                <Text style={styles.itemPreco}>R$ {item.preco.toFixed(2)}</Text>
-                </View>
-                <TouchableOpacity 
-                style={styles.botaoRemover}
-                onPress={() => removerItem(index)}
-                >
-                <Text style={styles.botaoRemoverTexto}>✕</Text>
+            <View style={styles.header}>
+                <Text style={styles.totalItens}>{totalItens} itens</Text>
+                <TouchableOpacity onPress={limparCarrinho}>
+                    <Text style={styles.limparTexto}>Limpar tudo</Text>
                 </TouchableOpacity>
             </View>
-            )}
-            keyExtractor={(_, index) => index.toString()}
-        />
 
-        <View style={styles.footer}>
-            <View style={styles.totalContainer}>
-            <Text style={styles.totalLabel}>Total</Text>
-            <Text style={styles.totalValor}>R$ {totalPreco.toFixed(2)}</Text>
-            </View>
-            
-            <Botao 
-            titulo="Finalizar Pedido"
-            onPress={finalizarPedido}
-            loading={finalizando}
+            <FlatList
+                data={itens}
+                renderItem={({ item, index }) => (
+                    <View style={styles.itemCard}>
+                        <View style={styles.itemInfo}>
+                            <Text style={styles.itemNome}>{item.nome}</Text>
+                            <Text style={styles.itemPreco}>R$ {item.preco.toFixed(2)}</Text>
+                        </View>
+
+                        <TouchableOpacity 
+                            style={styles.botaoRemover}
+                            onPress={() => removerItem(index)}
+                        >
+                            <Text style={styles.botaoRemoverTexto}>✕</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+                keyExtractor={(_, index) => index.toString()}
             />
-        </View>
+
+            <View style={styles.footer}>
+                <View style={styles.totalContainer}>
+                    <Text style={styles.totalLabel}>Total</Text>
+                    <Text style={styles.totalValor}>R$ {totalPreco.toFixed(2)}</Text>
+                </View>
+                
+                <Botao 
+                    titulo="Finalizar Pedido"
+                    onPress={finalizarPedido}
+                    loading={finalizando}
+                />
+            </View>
         </View>
     );
-    }
+}
 
-    const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',

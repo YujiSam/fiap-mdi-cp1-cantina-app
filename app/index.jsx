@@ -1,96 +1,162 @@
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image } from 'react-native';
+import { useEffect, useContext } from 'react';
 import { router } from 'expo-router';
 import Botao from '../components/Botao';
+import { AuthContext } from '../context/AuthContext';
+import { ActivityIndicator } from 'react-native';
 
 export default function HomeScreen() {
-    return (
-        <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor="#D1000F" />
-        
-        <View style={styles.header}>
-            <Text style={styles.emojiGrande}>🍔</Text>
-        </View>
-        
-        <View style={styles.content}>
-            <Text style={styles.titulo}>Cantina FIAP</Text>
-            <Text style={styles.subtitulo}>
-            Faça seu pedido com antecedência e evite filas no intervalo!
-            </Text>
-            
-            <View style={styles.beneficios}>
-            <View style={styles.beneficioItem}>
-                <Text style={styles.beneficioEmoji}>⏱️</Text>
-                <Text style={styles.beneficioTexto}>Sem filas</Text>
+    const { user, logout, loading } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace('/login');
+        }
+    }, [loading, user]);
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#D1000F" />
             </View>
-            <View style={styles.beneficioItem}>
-                <Text style={styles.beneficioEmoji}>📱</Text>
-                <Text style={styles.beneficioTexto}>Fácil e rápido</Text>
-            </View>
-            <View style={styles.beneficioItem}>
-                <Text style={styles.beneficioEmoji}>💰</Text>
-                <Text style={styles.beneficioTexto}>Preços justos</Text>
-            </View>
-            </View>
-            
-            <Botao 
-            titulo="Ver Cardápio" 
-            onPress={() => router.push('/cardapio')}
-            />
-        </View>
-        </View>
-    );
+        );
     }
 
-    const styles = StyleSheet.create({
+    return (
+        <View style={styles.container}>
+            <StatusBar barStyle="light-content" backgroundColor="#000" />
+
+            {/* HEADER */}
+            <View style={styles.header}>
+                <Image 
+                    source={require('../assets/fiap-logo.png')}
+                    style={styles.logo}
+                    resizeMode="contain"
+                />
+                <Text style={styles.title}>Cantina</Text>
+            </View>
+
+            {/* CARD PRINCIPAL */}
+            <View style={styles.card}>
+                <Text style={styles.subtitle}>
+                    Faça seu pedido com antecedência e evite filas no intervalo
+                </Text>
+
+                <View style={styles.divider} />
+
+                <View style={styles.beneficios}>
+                    <View style={styles.beneficioItem}>
+                        <Text style={styles.beneficioEmoji}>⏱️</Text>
+                        <Text style={styles.beneficioTexto}>Sem filas</Text>
+                    </View>
+
+                    <View style={styles.beneficioItem}>
+                        <Text style={styles.beneficioEmoji}>📱</Text>
+                        <Text style={styles.beneficioTexto}>Rápido</Text>
+                    </View>
+
+                    <View style={styles.beneficioItem}>
+                        <Text style={styles.beneficioEmoji}>💰</Text>
+                        <Text style={styles.beneficioTexto}>Preço justo</Text>
+                    </View>
+                </View>
+            </View>
+
+            {/* AÇÕES */}
+            <View style={styles.actions}>
+                <Botao 
+                    titulo="Ver Cardápio" 
+                    onPress={() => router.push('/cardapio')}
+                />
+
+                <Botao 
+                    titulo="Sair" 
+                    onPress={async () => {
+                        await logout();
+                        router.replace('/login');
+                    }}
+                />
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
+        padding: 20,
     },
+
     header: {
-        backgroundColor: '#D1000F',
-        height: 250,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
         alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 60,
+        marginBottom: 30,
     },
-    emojiGrande: {
-        fontSize: 80,
-    },
-    content: {
-        flex: 1,
-        padding: 25,
-        alignItems: 'center',
-    },
-    titulo: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: '#D1000F',
-        marginTop: 20,
+
+    logo: {
+        width: 120,
+        height: 50,
         marginBottom: 10,
     },
-    subtitulo: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-        marginBottom: 30,
-        lineHeight: 22,
+
+    title: {
+        fontSize: 28,
+        color: '#fff',
+        fontWeight: 'bold',
+        letterSpacing: 1,
     },
+
+    card: {
+        backgroundColor: '#111',
+        borderRadius: 20,
+        padding: 20,
+        borderWidth: 1,
+        borderColor: '#222',
+    },
+
+    subtitle: {
+        color: '#aaa',
+        textAlign: 'center',
+        marginBottom: 15,
+        lineHeight: 20,
+    },
+
+    divider: {
+        height: 1,
+        backgroundColor: '#222',
+        marginVertical: 15,
+    },
+
     beneficios: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '100%',
-        marginBottom: 40,
+        justifyContent: 'space-between',
     },
+
     beneficioItem: {
         alignItems: 'center',
+        flex: 1,
     },
+
     beneficioEmoji: {
-        fontSize: 30,
-        marginBottom: 8,
+        fontSize: 24,
+        marginBottom: 5,
     },
+
     beneficioTexto: {
+        color: '#fff',
         fontSize: 12,
-        color: '#666',
     },
+
+    actions: {
+        marginTop: 30,
+        gap: 15,
+    },
+
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
+    }
 });

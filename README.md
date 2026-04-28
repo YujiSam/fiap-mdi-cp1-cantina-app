@@ -1,3 +1,5 @@
+(Acesse o Github: https://github.com/YujiSam/fiap-mdi-cp1-cantina-app.git)
+
 # 🍔 Cantina FIAP - App de Pedidos
 
 ## 📱 Sobre o Projeto
@@ -126,4 +128,5 @@ Notificações push
 ## Integrante
 
 ### Gustavo Yuji Osugi [RM555034]
+
 

@@ -16,8 +16,14 @@ export default function Login() {
     const validate = () => {
         let err = {};
 
-        if (!email) err.email = "Email obrigatório";
-        if (!password) err.password = "Senha obrigatória";
+        if (!email) {
+            err.email = "Email obrigatório";
+        } else if (!email.includes("@")) {
+            err.email = "Email inválido";
+        }
+        if (!password) {
+            err.password = "Senha obrigatória";
+        }
 
         setErrors(err);
         return Object.keys(err).length === 0;

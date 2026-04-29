@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, StatusBar, Image } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image, ActivityIndicator } from 'react-native';
 import { useEffect, useContext } from 'react';
 import { router } from 'expo-router';
 import Botao from '../components/Botao';
 import { AuthContext } from '../context/AuthContext';
-import { ActivityIndicator } from 'react-native';
 
 export default function HomeScreen() {
     const { user, logout, loading } = useContext(AuthContext);

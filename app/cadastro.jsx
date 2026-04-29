@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "expo-router";
 import Botao from "../components/Botao";
-import { Image } from "react-native";
 
 export default function Cadastro() {
     const { register } = useContext(AuthContext);

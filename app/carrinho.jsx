@@ -47,7 +47,7 @@ export default function CarrinhoScreen() {
                         text: 'OK', 
                         onPress: () => {
                             setFinalizando(false);
-                            setItems([]); // 🔥 limpa carrinho
+                            setItems([]); // limpa carrinho
                             router.replace('/');
                         }
                     }

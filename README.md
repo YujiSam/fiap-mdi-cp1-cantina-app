@@ -1,53 +1,128 @@
-(Acesse o Github: https://github.com/YujiSam/fiap-mdi-cp1-cantina-app.git)
-
 # 🍔 Cantina FIAP - App de Pedidos
 
 ## 📱 Sobre o Projeto
 
 ### Nome do App
-**Cantina FIAP** - App para reserva e pré-pedido de itens da cantina
 
-### Problema que resolve
-O app resolve o problema de **filas e incerteza no horário do intervalo** na cantina da FIAP. Com o app, os alunos podem:
-- Ver o cardápio antecipadamente
-- Fazer o pedido com antecedência
-- Saber o valor total antes de chegar na cantina
-- Retirar o pedido sem enfrentar filas
+**Cantina FIAP** — Aplicativo mobile para reserva e pré-pedido de itens da cantina.
 
-### Operação da FIAP escolhida
+---
+
+## 🎯 Problema que resolve
+
+O app resolve o problema de **filas e falta de tempo no intervalo** na cantina da FIAP.
+
+Com o aplicativo, os alunos podem:
+
+* Visualizar o cardápio antecipadamente
+* Fazer pedidos antes do intervalo
+* Saber o valor total antes de chegar
+* Retirar o pedido rapidamente, sem filas
+
+---
+
+## 🏫 Contexto
+
 Foi escolhida a operação da **Cantina da FIAP**, pois:
-- É um problema real enfrentado pelos alunos diariamente
-- O horário do intervalo é curto (geralmente 15-20 minutos)
-- Muitos alunos desistem de comprar por causa das filas
-- A cantina fica sobrecarregada nos horários de pico
 
-### Funcionalidades implementadas
-✅ Visualização completa do cardápio  
-✅ Adição de itens ao carrinho  
-✅ Remoção de itens do carrinho  
-✅ Cálculo automático do valor total  
-✅ Resumo do pedido antes de finalizar  
-✅ Confirmação com número do pedido  
-✅ Carrinho persistente entre telas  
-✅ Tratamento de carrinho vazio  
+* O intervalo é curto (15–20 minutos)
+* Existe grande fluxo de alunos
+* Filas são frequentes
+* Há perda de tempo e desistência de compra
+
+---
+
+## 🚀 Funcionalidades
+
+### 🔐 Autenticação
+
+* Cadastro de usuário com validação de email FIAP (rm@fiap.com.br)
+* Login com validação de credenciais
+* Persistência de sessão (AsyncStorage)
+* Proteção de rotas (acesso somente logado)
+
+### 🍽️ Cardápio
+
+* Listagem completa de produtos
+* Busca dinâmica por nome (filtro em tempo real)
+* Interface estilizada (tema FIAP)
+
+### 🛒 Carrinho
+
+* Adição de itens
+* Remoção de itens
+* Cálculo automático do total
+* Persistência entre telas (Context API)
+* Resumo fixo do carrinho
+
+### 📦 Pedido
+
+* Tela de revisão do carrinho
+* Seleção de forma de pagamento (PIX ou balcão)
+* Confirmação com número do pedido
+* Feedback visual com Alert
+* Simulação de tempo de preparo
+
+### 🎨 Interface
+
+* Tema escuro (preto + vermelho FIAP)
+* Layout moderno com cards
+* Feedback visual para ações
+* Tratamento de estados (loading, vazio, erro)
+
+---
+
+## 🧠 Diferenciais Implementados
+
+* 🔍 Busca no cardápio em tempo real
+* 🔐 Sistema de autenticação completo
+* 💾 Persistência de dados com AsyncStorage
+* 🧩 Uso de Context API (Auth + Carrinho)
+* ⚡ Proteção de rotas
+* 🎯 UX melhorada (mensagens, estados vazios, loading)
+* 💳 Seleção de forma de pagamento no app  
+* 🎓 Validação de email no padrão institucional FIAP  
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* React Native
+* Expo
+* Expo Router
+* AsyncStorage
+* Context API
+* JavaScript (ES6+)
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+app/            # Telas (Home, Login, Cadastro, Cardápio, Carrinho)
+components/     # Componentes reutilizáveis
+context/        # Contextos (AuthContext, AppDataContext)
+constants/      # Dados estáticos (cardápio)
+assets/         # Imagens e logo
+```
+
+---
 
 ## 🚀 Como Rodar o Projeto
 
 ### Pré-requisitos
 
-Node.js 
+* Node.js
+* Expo Go
+* Git
 
-Expo Go
-
-Git
-
-### Passo a passo para executar
+### Passo a passo
 
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/YujiSam/fiap-mdi-cp1-cantina-app.git
 
-# 2. Entre na pasta do projeto
+# 2. Acesse a pasta
 cd fiap-mdi-cp1-cantina-app
 
 # 3. Instale as dependências
@@ -55,78 +130,44 @@ npm install
 
 # 4. Execute o projeto
 npx expo start
-
-# 5. Escaneie o QR Code com o app Expo Go
 ```
 
-## 💻 Decisões Técnicas
+📱 Depois, escaneie o QR Code com o Expo Go.
 
-```
-Estrutura do Projeto
-text
-app/           # Telas (Home, Cardápio, Carrinho)
-components/    # Componentes reutilizáveis (Botao, ItemCardapio, etc.)
-constants/     # Dados do cardápio
-Hooks utilizados
-useState	Guardar itens adicionados ao carrinho
-useState	Controlar loading na finalização
-useLocalSearchParams Receber dados do carrinho da tela anterior
-```
+---
 
-### Navegação
+<h3 align="center">📱 Telas do App</h3>
 
-Expo Router com Stack Navigator (pilha)
+<p align="center">
+  <img src="./screenshots/login.png" width="250"/>
+  <img src="./screenshots/cadastro.png" width="250"/>
+  <img src="./screenshots/home.png" width="250"/>
+  <img src="./screenshots/cardapio.png" width="250"/>
+  <img src="./screenshots/carrinho.png" width="250"/>
+  <img src="./screenshots/confirmado.png" width="250"/>
+</p>
 
-router.push() → ir para nova tela
+---
 
-router.back() → voltar
+## 🎥 Vídeo
 
-router.replace() → voltar ao início
+[▶️ Ver demonstração do app](https://youtube.com/shorts/FM_1DQVbAH0)
 
-### Estilização
+---
 
-StyleSheet do React Native
+## 🔮 Próximos Passos
 
-Cores da FIAP: vermelho #D1000F
+* Integração com RM FIAP
+* Sistema de pagamento
+* Notificações push
+* Backend real (API)
+* Histórico de pedidos
 
-Flexbox para responsividade
+---
 
-### Diferenciais implementados
+## 👨‍💻 Integrante
 
-✅ Loading nos botões
+**Gustavo Yuji Osugi**
+RM: 555034
 
-✅ Tela de "Carrinho vazio"
-
-✅ Feedback visual (Alert ao finalizar)
-
-## 📸 Demonstração
-
-### Prints das telas
-
-#### Tela 1: Tela Inicial (Home)
-![Tela Inicial](./screenshots/home.png)
-
-#### Tela 2: Cardápio
-![Tela Cardápio](./screenshots/cardapio.png)
-
-#### Tela 3: Carrinho
-![Tela Carrinho](./screenshots/carrinho.png)
-
-#### Tela 4: Confirmação
-![Tela Confirmado](./screenshots/confirmado.png)
-
-## 🎥 Vídeo de demonstração
-
-[▶️ Clique aqui para ver o vídeo do app funcionando](https://youtube.com/shorts/baAa9Yk8ep4)
-
-## Próximos Passos 
-
-Login com RM
-
-Notificações push
-
-## Integrante
-
-### Gustavo Yuji Osugi [RM555034]
-
-
+---

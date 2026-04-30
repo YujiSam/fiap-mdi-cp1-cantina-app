@@ -16,7 +16,7 @@ export default function Cadastro() {
 
     const handleRegister = async () => {
 
-        const emailRegex = /^RM\d+@fiap\.com\.br$/;
+        const emailRegex = /^rm\d+@fiap\.com\.br$/;
 
         if (!name || !email || password.length < 6 || password !== confirm) {
             setError("Dados inválidos");
@@ -24,7 +24,7 @@ export default function Cadastro() {
         }
 
         if (!emailRegex.test(email)) {
-            setError("Use um email FIAP válido (ex: RM555034@fiap.com.br)");
+            setError("Use um email FIAP válido (ex: rm555034@fiap.com.br)");
             return;
         }
 
@@ -55,7 +55,7 @@ export default function Cadastro() {
                     />
 
                     <TextInput 
-                        placeholder="Email (ex: RM123456@fiap.com.br)"
+                        placeholder="Email (ex: rm123456@fiap.com.br)"
                         placeholderTextColor="#888"
                         style={styles.input}
                         onChangeText={setEmail}

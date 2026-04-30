@@ -12,6 +12,8 @@ export default function CarrinhoScreen() {
     const totalPreco = itens.reduce((sum, item) => sum + item.preco, 0);
     const totalItens = itens.length;
 
+    const [pagamento, setPagamento] = useState("balcao");
+
     const removerItem = (index) => {
         const novosItens = [...itens];
         novosItens.splice(index, 1);
@@ -41,13 +43,18 @@ export default function CarrinhoScreen() {
 
             Alert.alert(
                 '✅ Pedido Confirmado!',
-                `Pedido #${numeroPedido}\n\nTotal: R$ ${totalPreco.toFixed(2)}\n\nRetire seu pedido na cantina em 15 minutos.\n\nApresente este número no balcão.`,
+                `Pedido #${numeroPedido}\n
+                Total: R$ ${totalPreco.toFixed(2)}
+
+                Pagamento: ${pagamento === "pix" ? "PIX" : "Balcão"}
+
+                Retire seu pedido na cantina em 15 minutos.
+                Apresente este número no balcão.`,
                 [
                     { 
                         text: 'OK', 
                         onPress: () => {
-                            setFinalizando(false);
-                            setItems([]); // limpa carrinho
+                            setItems([]); 
                             router.replace('/');
                         }
                     }
@@ -106,7 +113,29 @@ export default function CarrinhoScreen() {
                     <Text style={styles.totalLabel}>Total</Text>
                     <Text style={styles.totalValor}>R$ {totalPreco.toFixed(2)}</Text>
                 </View>
-                
+
+                <View style={styles.pagamentoContainer}>
+                    <Text style={styles.pagamentoTitulo}>Forma de pagamento</Text>
+
+                    <TouchableOpacity onPress={() => setPagamento("balcao")}>
+                        <Text style={[
+                            styles.pagamentoOpcao,
+                            pagamento === "balcao" && styles.pagamentoSelecionado
+                        ]}>
+                            💵 Pagar no balcão
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => setPagamento("pix")}>
+                        <Text style={[
+                            styles.pagamentoOpcao,
+                            pagamento === "pix" && styles.pagamentoSelecionado
+                        ]}>
+                            ⚡ PIX
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+        
                 <Botao 
                     titulo="Finalizar Pedido"
                     onPress={finalizarPedido}
@@ -227,4 +256,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#D1000F',
     },
+    pagamentoContainer: {
+    marginBottom: 20,
+    },
+    pagamentoTitulo: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    pagamentoOpcao: {
+        fontSize: 14,
+        padding: 10,
+        borderRadius: 8,
+        backgroundColor: '#eee',
+        marginBottom: 8,
+    },
+    pagamentoSelecionado: {
+        backgroundColor: '#D1000F',
+        color: '#fff',
+},
 });

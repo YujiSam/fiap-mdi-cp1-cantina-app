@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "expo-router";
 import Botao from "../components/Botao";
@@ -15,8 +15,16 @@ export default function Cadastro() {
     const [error, setError] = useState("");
 
     const handleRegister = async () => {
+
+        const emailRegex = /^RM\d+@fiap\.com\.br$/;
+
         if (!name || !email || password.length < 6 || password !== confirm) {
             setError("Dados inválidos");
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            setError("Use um email FIAP válido (ex: RM555034@fiap.com.br)");
             return;
         }
 
@@ -25,53 +33,61 @@ export default function Cadastro() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Cadastro</Text>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Cadastro</Text>
 
-            <Image 
-                source={require('../assets/fiap-logo.png')}
-                style={styles.logo}
-                resizeMode="contain"
-            />
+                    <Image 
+                        source={require('../assets/fiap-logo.png')}
+                        style={styles.logo}
+                        resizeMode="contain"
+                    />
 
-            <TextInput 
-                placeholder="Nome"
-                placeholderTextColor="#888"
-                style={styles.input}
-                onChangeText={setName}
-            />
+                    <TextInput 
+                        placeholder="Nome"
+                        placeholderTextColor="#888"
+                        style={styles.input}
+                        onChangeText={setName}
+                    />
 
-            <TextInput 
-                placeholder="Email"
-                placeholderTextColor="#888"
-                style={styles.input}
-                onChangeText={setEmail}
-            />
+                    <TextInput 
+                        placeholder="Email (ex: RM123456@fiap.com.br)"
+                        placeholderTextColor="#888"
+                        style={styles.input}
+                        onChangeText={setEmail}
+                    />
 
-            <TextInput 
-                placeholder="Senha"
-                placeholderTextColor="#888"
-                secureTextEntry
-                style={styles.input}
-                onChangeText={setPassword}
-            />
+                    <TextInput 
+                        placeholder="Senha"
+                        placeholderTextColor="#888"
+                        secureTextEntry
+                        style={styles.input}
+                        onChangeText={setPassword}
+                    />
 
-            <TextInput 
-                placeholder="Confirmar senha"
-                placeholderTextColor="#888"
-                secureTextEntry
-                style={styles.input}
-                onChangeText={setConfirm}
-            />
+                    <TextInput 
+                        placeholder="Confirmar senha"
+                        placeholderTextColor="#888"
+                        secureTextEntry
+                        style={styles.input}
+                        onChangeText={setConfirm}
+                        returnKeyType="done"
+                    />
 
-            {error !== "" && <Text style={styles.error}>{error}</Text>}
+                    {error !== "" && <Text style={styles.error}>{error}</Text>}
 
-            <Botao titulo="Cadastrar" onPress={handleRegister} />
+                    <Botao titulo="Cadastrar" onPress={handleRegister} />
 
-            <TouchableOpacity onPress={() => router.back()}>
-                <Text style={styles.link}>Já tem conta? Fazer login</Text>
-            </TouchableOpacity>
-        </View>
+                    <TouchableOpacity onPress={() => router.back()}>
+                        <Text style={styles.link}>Já tem conta? Fazer login</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
